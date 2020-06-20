@@ -10,12 +10,8 @@ export default async (req, res) => {
   const slug = req.url.substring(1)
   const destination = await findDestination(slug)
 
-  res.writeHead(302, { Location: destination.dest || 'https://matthewstanciu.me' })
+  res.writeHead(302, { Location: destination || 'https://matthewstanciu.me' })
   res.end()
-
-  ablsTable.update(destination.id, {
-    'visits': destination.visits + 1
-  })
 }
 
 const findDestination = async (slug) => {
@@ -23,9 +19,5 @@ const findDestination = async (slug) => {
     filterByFormula: `{slug} = '${slug}'`,
     maxRecords: 1
   }))[0]
-  if (destinationRecord) return {
-    dest: destinationRecord.fields['destination'],
-    id: destinationRecord.id,
-    visits: destinationRecord.fields['visits']
-  }
+  if (destinationRecord) return destinationRecord.fields['destinations']
 }
