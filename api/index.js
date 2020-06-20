@@ -19,5 +19,5 @@ const findDestination = async (slug) => {
     filterByFormula: `{slug} = '${slug}'`,
     maxRecords: 1
   }))[0]
-  if (destinationRecord) return destinationRecord.fields['destinations']
+  if (destinationRecord) return destinationRecord.fields['destination']
 }
