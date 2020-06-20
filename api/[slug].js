@@ -8,6 +8,7 @@ const ablsTable = new AirtablePlus({
 
 export default async (req, res) => {
   const { slug } = req.query
+  console.log(slug)
   const destination = await findDestination(slug)
 
   res.writeHead(302, { Location: destination || 'https://matthewstanciu.me' })
@@ -16,7 +17,8 @@ export default async (req, res) => {
 
 const findDestination = async (slug) => {
   const destinationRecord = (await ablsTable.read({
-    filterByFormula: `{slug} = '${slug}'`
+    filterByFormula: `{slug} = '${slug}'`,
+    maxRecords: 1
   }))[0]
-  if (destinationRecord) return destinationRecord[0].fields['destination']
+  if (destinationRecord) return destinationRecord.fields['destination']
 }
