@@ -7,7 +7,7 @@ const ablsTable = new AirtablePlus({
 })
 
 export default async (req, res) => {
-  const slug = req.url.substring(1)
+  const { slug } = req.query
   const destination = await findDestination(slug)
 
   res.writeHead(302, { Location: destination || 'https://matthewstanciu.me' })
