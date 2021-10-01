@@ -7,6 +7,7 @@ const ablsTable = new AirtablePlus({
 })
 
 export default async (req, res) => {
+  res.setHeader('Cache-Control', 's-maxage=86400')
   const slug = req.url.substring(1)
   const destination = await findDestination(slug)
 
