@@ -18,7 +18,8 @@ export default async (req: NextRequest) => {
   const destination = await findDestination(slug)
   return new Response('', {
     headers: {      
-      'Cache-Control': 'max-age=0, s-maxage=60, stale-while-revalidate',
+      'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate',
+      'Access-Control-Allow-Origin': '*',
       'Location': destination || fallback
     },
     status: 308
