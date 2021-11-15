@@ -26,7 +26,7 @@ export default async (req: NextRequest) => {
   headers.set("Cache-Control", "s-maxage=10, stale-while-revalidate")
 
   const destination = await findDestination(slug)
-  return NextResponse.redirect(destination || fallback)
+  return NextResponse.redirect(destination || fallback, 308)
 }
 
 const findDestination = async (slug: string): Promise<string | null> => {
