@@ -8,7 +8,11 @@ const airtable = {
 }
 
 export default async (req: NextRequest, res: NextResponse) => {
-  res.headers.append('Cache-Control', 's-maxage=60, stale-while-revalidate')
+  try {
+    res.headers.append('Cache-Control', 's-maxage=60, stale-while-revalidate')
+  } catch(err) {
+    console.log(err)
+  }
 
   const slug = req.nextUrl.pathname.replace('/', '')
   if (slug.length === 0) {
