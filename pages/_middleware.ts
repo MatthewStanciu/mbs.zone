@@ -8,22 +8,13 @@ const airtable = {
 }
 
 export default async (req: NextRequest) => {
-  if (req.cookies["_vercel_no_cache"] === "1" ||
-    req.nextUrl.searchParams["?_vercel_no_cache"] === "1" ||
-    req.headers["Authorization"] ||
-    req.headers["Range"]) {
-      return new Response('Sorry, caching must happen here!!!', {
-        status: 405
-      })
-  }
+  const headers = new Headers({})
+  headers.set("Cache-Control", "s-maxage=10, stale-while-revalidate")
 
   const slug = req.nextUrl.pathname.replace('/', '')
   if (slug.length === 0) {
     NextResponse.redirect(fallback)
   }
-
-  const headers = new Headers({})
-  headers.set("Cache-Control", "s-maxage=10, stale-while-revalidate")
 
   const destination = await findDestination(slug)
   return NextResponse.redirect(destination || fallback, 308)
