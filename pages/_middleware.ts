@@ -16,7 +16,7 @@ export default async (req: NextRequest, res: NextResponse) => {
   }
 
   const destination = await findDestination(slug)
-  return NextResponse.redirect(destination || fallback, 308)
+  return NextResponse.redirect(destination || fallback)
 }
 
 const findDestination = async (slug: string): Promise<string | null> => {
