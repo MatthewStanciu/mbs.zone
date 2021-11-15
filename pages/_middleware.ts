@@ -15,6 +15,17 @@ export default async (req: NextRequest) => {
     NextResponse.redirect(fallback)
   }
 
+  if (
+		req.cookies["_vercel_no_cache"] === "1" ||
+		req.nextUrl.searchParams["?_vercel_no_cache"] === "1" ||
+		req.headers["Authorization"] ||
+		req.headers["Range"]
+	) {
+		return new Response('sorry, we must get that cash', {
+      status: 200
+    })
+	}
+
   const destination = await findDestination(slug)
   return new Response('', {
     headers: {      
