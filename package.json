@@ -9,8 +9,12 @@
   "author": "MatthewStanciu",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^16.11.7",
     "next": "^12.0.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.34",
     "typescript": "^4.4.4"
   }
 }
