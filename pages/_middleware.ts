@@ -11,7 +11,7 @@ export default async (req: NextRequest) => {
   const res = new NextResponse;
   res.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate')
 
-  console.log(res.headers.keys)
+  console.log(res.headers.keys.toString)
 
   const slug = req.nextUrl.pathname.replace('/', '')
   if (slug.length === 0) {
@@ -19,7 +19,7 @@ export default async (req: NextRequest) => {
   }
 
   const destination = await findDestination(slug)
-  return NextResponse.redirect(destination || fallback)
+  return NextResponse.redirect(destination || fallback, 308)
 }
 
 const findDestination = async (slug: string): Promise<string | null> => {
