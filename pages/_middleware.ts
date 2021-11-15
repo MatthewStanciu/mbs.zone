@@ -30,6 +30,7 @@ export default async (req: NextRequest) => {
 }
 
 const findDestination = async (slug: string): Promise<string | null> => {
+  console.log('finding destination')
   const records = await fetch(
     `https://api.airtable.com/v0/${airtable.baseId}/${airtable.tableName}`,
     { headers: { Authorization: `Bearer ${airtable.apiKey}` } }
