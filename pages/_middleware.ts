@@ -7,9 +7,12 @@ const airtable = {
   apiKey: process.env.AIRTABLE_API_KEY
 }
 
-export default async (req: NextRequest, res: NextResponse) => {
+export default async (req: NextRequest) => {
+  const res = new NextResponse;
   res.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate')
-  
+
+  console.log(res.headers.keys)
+
   const slug = req.nextUrl.pathname.replace('/', '')
   if (slug.length === 0) {
     NextResponse.redirect(fallback)
