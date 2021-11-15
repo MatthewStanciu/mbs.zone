@@ -7,9 +7,8 @@ const airtable = {
   apiKey: process.env.AIRTABLE_API_KEY
 }
 
-export default async (req: NextRequest) => {
-  const headers = new Headers({})
-  headers.set("Cache-Control", "s-maxage=10, stale-while-revalidate")
+export default async (req: NextRequest, res: NextResponse) => {
+  res.headers.set("Cache-Control", "s-maxage=10, stale-while-revalidate")
 
   const slug = req.nextUrl.pathname.replace('/', '')
   if (slug.length === 0) {
