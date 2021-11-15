@@ -8,8 +8,8 @@ const airtable = {
 }
 
 export default async (req: NextRequest, res: NextResponse) => {
-  res.headers.set("Cache-Control", "s-maxage=10, stale-while-revalidate")
-
+  res.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate')
+  
   const slug = req.nextUrl.pathname.replace('/', '')
   if (slug.length === 0) {
     NextResponse.redirect(fallback)
