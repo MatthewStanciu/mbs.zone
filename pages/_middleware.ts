@@ -11,7 +11,7 @@ export default async (req: NextRequest) => {
   const res = new NextResponse;
   res.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate')
 
-  console.log(res.headers.keys.toString)
+  res.headers.forEach(header => console.log(header.toString))
 
   const slug = req.nextUrl.pathname.replace('/', '')
   if (slug.length === 0) {
