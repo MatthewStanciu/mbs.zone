@@ -29,9 +29,12 @@ const findDestination = async (slug: string): Promise<string | null> => {
   //     records.map((record) => record.fields)
   //   )
 
-  const records = (await airtable.read({
-    filterByFormula: `{slug} = ${slug}`
-  }))[0] as unknown as AirtablePlusPlusRecord<{ slug: string, destination: string, visits: number }>[]
+  const records = (await airtable.read()) as unknown as AirtablePlusPlusRecord<{ slug: string, destination: string, visits: number }>[]
+
+  console.log('records: ' + records)
+  records.forEach(rec => {
+    console.log(rec.fields)
+  })
 
   return records.find((record) => record.fields.slug === slug.toLowerCase())?.fields.destination
 }
