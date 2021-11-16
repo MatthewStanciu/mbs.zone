@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-// import { AirtablePlusPlus, AirtablePlusPlusRecord } from 'airtable-plusplus'
+import { AirtablePlusPlus, AirtablePlusPlusRecord } from 'airtable-plusplus'
 
 const fallback = 'https://matthewstanciu.me'
 // const airtable = new AirtablePlusPlus({
