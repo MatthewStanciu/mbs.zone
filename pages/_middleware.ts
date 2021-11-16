@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { AirtablePlusPlus, AirtablePlusPlusRecord } from 'airtable-plusplus'
 
-type AirtableField = Record<string, number | string | string[]>;
-
 const fallback = 'https://matthewstanciu.me'
-const airtable: AirtablePlusPlus<AirtableField> = new AirtablePlusPlus({
+const airtable = new AirtablePlusPlus({
   apiKey: process.env.AIRTABLE_API_KEY,
   baseId: 'appwZU7mXFxKLVXs4',
   tableName: 'ABLS'
