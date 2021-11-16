@@ -19,25 +19,26 @@ export default async (req: NextRequest) => {
 }
 
 const findDestination = async (slug: string): Promise<string | null> => {
-  // const records = await fetch(
-  //   `https://api.airtable.com/v0/${airtable.baseId}/${airtable.tableName}`,
-  //   { headers: { Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}` } }
-  // )
-  //   .then(r => r.json())
-  //   .then(json => json.records)
-  //   .then((records: Array<{ fields: { slug: string; destination: string } }>) =>
-  //     records.map((record) => record.fields)
-  //   )
+  const records = await fetch(
+    `https://api.airtable.com/v0/appwZU7mXFxKLVXs4/ABLS`,
+    { headers: { Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}` } }
+  )
+    .then(r => r.json())
+    .then(json => json.records)
+    .then((records: Array<{ fields: { slug: string; destination: string } }>) =>
+      records.map((record) => record.fields)
+    )
+    return records.find(record => record.slug === slug.toLowerCase())?.destination
 
-  const records = (await airtable.read({
-    filterByFormula: `{slug} = "${slug.toLowerCase()}"`,
-    maxRecords: 1
-  })) as AirtablePlusPlusRecord<{ slug: string, destination: string, visits: number }>[]
+  // const records = (await airtable.read({
+  //   filterByFormula: `{slug} = "${slug.toLowerCase()}"`,
+  //   maxRecords: 1
+  // })) as AirtablePlusPlusRecord<{ slug: string, destination: string, visits: number }>[]
 
-  console.log('records: ' + records)
-  records.forEach(rec => {
-    console.log(rec.fields)
-  })
+  // console.log('records: ' + records)
+  // records.forEach(rec => {
+  //   console.log(rec.fields)
+  // })
 
-  return records[0].fields.destination
+  // return records[0].fields.destination
 }
