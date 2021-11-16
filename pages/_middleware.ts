@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { AirtablePlusPlus, AirtablePlusPlusRecord } from 'airtable-plusplus'
+// import { AirtablePlusPlus, AirtablePlusPlusRecord } from 'airtable-plusplus'
 
 const fallback = 'https://matthewstanciu.me'
-const airtable = new AirtablePlusPlus({
-  apiKey: process.env.AIRTABLE_API_KEY,
-  baseId: 'appwZU7mXFxKLVXs4',
-  tableName: 'ABLS'
-})
+// const airtable = new AirtablePlusPlus({
+//   apiKey: process.env.AIRTABLE_API_KEY,
+//   baseId: 'appwZU7mXFxKLVXs4',
+//   tableName: 'ABLS'
+// })
 
 export default async (req: NextRequest) => {
   const slug = req.nextUrl.pathname.replace('/', '')
