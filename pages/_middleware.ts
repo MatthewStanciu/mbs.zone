@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Note: The official Airtable API wrapper (and by extension, every other one I could find) does not
+// currently work on Edge Functions because it uses `eval` somewhere, and `eval` is not allowed on
+// Edge Functions (at least this is my understanding). When a TypeScript-compatible Airtable API wrapper
+// begins working on Edge Functions, I will start using it. In the meantime, however, I need to make raw requests.
+
 const fallback = 'https://matthewstanciu.me'
 const airtable = {
   baseId: 'appwZU7mXFxKLVXs4',
