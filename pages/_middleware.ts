@@ -14,29 +14,45 @@ export default async (req: NextRequest) => {
   }
 
   const destination = await findDestination(slug)
-  return NextResponse.redirect(destination || fallback)
+  logVisit(destination.recId, destination.visits)
+  return NextResponse.redirect(destination.destination || fallback)
 }
 
-const findDestination = async (slug: string): Promise<string | null> => {
+const findDestination = async (slug: string): Promise<{destination: string, visits: number, recId: string} | null> => {
   const records = await fetch(
     `https://api.airtable.com/v0/${airtable.baseId}/${airtable.tableName}`,
     { headers: { Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}` } }
   )
     .then(r => r.json())
     .then(json => json.records)
-    .then((records: Array<{ fields: { slug: string; destination: string } }>) =>
+    .then((records: Array<{ fields: { slug: string; destination: string, visits: number, id: string } }>) =>
       records.map((record) => record.fields)
     )
-    return records.find(record => record.slug === slug.toLowerCase())?.destination
+    const record = records.find(rec => rec.slug === slug.toLowerCase())
+    return {
+      destination: record?.destination,
+      visits: record?.visits,
+      recId: record.id
+    }
 }
 
-const logVisit = async (recordId: string): Promise<void> => {
-  await fetch(
+const logVisit = (recordId: string, visits: number): void => {
+  fetch(
     `https://api.airtable.com/v0/${airtable.baseId}/${airtable.tableName}/${recordId}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`
-      }
+      },
+      body: JSON.stringify({
+        'records': [
+          {
+            'id': recordId,
+            'fields': {
+                'visits': visits + 1
+            }
+          }
+        ]
+      })
     }
   )
 }
