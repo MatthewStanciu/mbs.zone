@@ -21,18 +21,18 @@ export default async (req: NextRequest) => {
 const findDestination = async (slug: string): Promise<{destination: string, visits: number, recId: string} | null> => {
   const records = await fetch(
     `https://api.airtable.com/v0/${airtable.baseId}/${airtable.tableName}`,
-    { headers: { Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}` } }
+    { headers: { Authorization: `Bearer ${airtable.apiKey}` } }
   )
     .then(r => r.json())
     .then(json => json.records)
-    .then((records: Array<{ fields: { slug: string; destination: string, visits: number, id: string } }>) =>
+    .then((records: Array<{ fields: { slug: string; destination: string; visits: number; id: string } }>) =>
       records.map((record) => record.fields)
     )
     const record = records.find(rec => rec.slug === slug.toLowerCase())
     return {
       destination: record?.destination,
       visits: record?.visits,
-      recId: record.id
+      recId: record?.id
     }
 }
 
