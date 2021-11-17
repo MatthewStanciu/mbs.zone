@@ -37,11 +37,13 @@ const findDestination = async (slug: string): Promise<{destination: string, visi
 }
 
 const logVisit = (recordId: string, visits: number): void => {
+  if (recordId === null) return
   fetch(
-    `https://api.airtable.com/v0/${airtable.baseId}/${airtable.tableName}/${recordId}`, {
+    `https://api.airtable.com/v0/${airtable.baseId}/${airtable.tableName}`, {
       method: 'PATCH',
       headers: {
-        Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`
+        Authorization: `Bearer ${airtable.apiKey}`,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         'records': [
