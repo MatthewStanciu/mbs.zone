@@ -51,11 +51,11 @@ const logVisit = (recordId: string, visits: number): void => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        'records': [
+        records: [
           {
-            'id': recordId,
-            'fields': {
-                'visits': visits + 1
+            id: recordId,
+            fields: {
+                visits: visits + 1
             }
           }
         ]
