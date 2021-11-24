@@ -19,11 +19,11 @@ export default async (req: NextRequest) => {
   }
 
   const destination = await findDestination(slug)
-  logVisit(destination.recId, destination.visits)
-  return NextResponse.redirect(destination.destination || fallback)
+  logVisit(destination?.recId, destination?.visits)
+  return NextResponse.redirect(destination?.destination || fallback)
 }
 
-const findDestination = async (slug: string): Promise<{destination: string, visits: number, recId: string} | null> => {
+const findDestination = async (slug: string): Promise<{destination: string | undefined, visits: number | undefined, recId: string | undefined} | null> => {
   const records = await fetch(
     `https://api.airtable.com/v0/${airtable.baseId}/${airtable.tableName}`,
     { headers: { Authorization: `Bearer ${airtable.apiKey}` } }
@@ -41,8 +41,8 @@ const findDestination = async (slug: string): Promise<{destination: string, visi
     }
 }
 
-const logVisit = (recordId: string, visits: number): void => {
-  if (recordId === null) return
+const logVisit = (recordId: string|undefined, visits: number|undefined): void => {
+  if (typeof recordId === undefined || typeof visits === undefined) return
   fetch(
     `https://api.airtable.com/v0/${airtable.baseId}/${airtable.tableName}`, {
       method: 'PATCH',
@@ -55,6 +55,7 @@ const logVisit = (recordId: string, visits: number): void => {
           {
             id: recordId,
             fields: {
+                //@ts-ignore
                 visits: visits + 1
             }
           }
