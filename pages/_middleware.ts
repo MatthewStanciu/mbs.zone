@@ -42,7 +42,7 @@ const findDestination = async (slug: string): Promise<{destination: string | und
 }
 
 const logVisit = (recordId: string|undefined, visits: number|undefined): void => {
-  if (typeof recordId === undefined || typeof visits === undefined) return
+  if (!recordId || typeof visits === 'undefined') return
   fetch(
     `https://api.airtable.com/v0/${airtable.baseId}/${airtable.tableName}`, {
       method: 'PATCH',
@@ -55,7 +55,6 @@ const logVisit = (recordId: string|undefined, visits: number|undefined): void =>
           {
             id: recordId,
             fields: {
-                //@ts-ignore
                 visits: visits + 1
             }
           }
